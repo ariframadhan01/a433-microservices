@@ -1,0 +1,19 @@
+version: "3.8"  # Menggunakan Docker Compose versi 3.8
+
+services:
+  item-app:
+    image: ariframadhan/item-app:v1
+    ports:
+      - "80:8080"  # Mapping port host 80 ke container 8080
+    depends_on:
+      - item-db  # item-app berjalan setelah item-db tersedia
+    restart: always  # item-app selalu restart jika terhenti   
+
+  item-db:
+    image: mongo:3  # Menggunakan image MongoDB versi 3 dari Docker Hub
+    volumes:
+      - app-db:/data/db  # Menggunakan volume untuk penyimpanan data
+    restart: always  # item-db selalu restart jika terhenti
+
+volumes:
+  app-db:  # Volume untuk menyimpan data MongoDB
